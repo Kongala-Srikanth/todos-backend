@@ -194,7 +194,7 @@ app.put('/todo/:id', middlewareJwtToken, async (request, response) => {
         
 
         const result = await todosTableData.updateOne(
-            { id: parseInt(id), userId: new ObjectId(request.userId) }, 
+            { id: id, userId: new ObjectId(request.userId) }, 
             { $set: updateData }
         );
 

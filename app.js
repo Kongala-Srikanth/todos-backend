@@ -217,7 +217,7 @@ app.delete('/todo/:id', middlewareJwtToken, async (request, response) => {
 
     try {
         const result = await todosTableData.deleteOne({
-            id: parseInt(id), 
+            id: id, 
             userId: findUserId 
         });
 

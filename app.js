@@ -105,11 +105,11 @@ app.post('/register', async(request, response) => {
 // API-2 User Login
 
 app.post('/login', async(request, response) => {
-    const {username, password} = request.body
+    const {email, password} = request.body
     const collection = client.db(process.env.DB_NAME).collection('userDetails')
  
     
-    const checkUserInDB = await collection.find({username}).toArray()
+    const checkUserInDB = await collection.find({email}).toArray()
     
     if(checkUserInDB.length === 1){
         const verifyPassword = await bcrypt.compare(password, checkUserInDB[0].password)

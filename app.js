@@ -277,6 +277,8 @@ app.put('/profile', middlewareJwtToken, async (request, response) => {
 });
 
 
+// Get all todos from specific user
+
 app.get('/todos', middlewareJwtToken, async (request, response) => {
     const userCollection = client.db(process.env.DB_NAME).collection('todoList');
     const {userId} = request
@@ -284,6 +286,25 @@ app.get('/todos', middlewareJwtToken, async (request, response) => {
 
     try{
         const data = await userCollection.find({userId: findUserId}).toArray()
+        response.status(200).json(data)
+
+    }catch (e){
+        console.log('Error fetching all todos:', e)
+        response.status(500).json({message: 'Failed to fetch todos', error: e.message})
+    }
+    
+})
+
+
+// Get user profile information
+
+app.get('/profile', middlewareJwtToken, async (request, response) => {
+    const userCollection = client.db(process.env.DB_NAME).collection('userDetails');
+    const {userId} = request
+    const findUserId = new ObjectId(userId)
+
+    try{
+        const data = await userCollection.findOne({_id: findUserId})
         response.status(200).json(data)
 
     }catch (e){
